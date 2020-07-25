@@ -1,15 +1,19 @@
-package Model;
+package Model.StoneHandeling.Stonetypes;
+
+import Model.BoardDataHandle.BoardDataHandler;
+import Model.BoardDataHandle.ChessMove;
+import Model.StoneHandeling.StoneType;
 
 import java.util.ArrayList;
 
 public class Horse extends StoneType {
 
-    private ChessBoard board;
+    private BoardDataHandler board;
     private boolean isWhite = true;
     private String stoneTypeName = "";
     private int stoneTypeIndex = -1;
 
-    public Horse(ChessBoard cBoard, boolean sWhite){
+    public Horse(BoardDataHandler cBoard, boolean sWhite){
         board = cBoard;
         isWhite = sWhite;
         stoneTypeName = "Horse " + (sWhite ? "White" : "Black");

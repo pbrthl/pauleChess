@@ -1,10 +1,14 @@
-package Model;
+package Model.StoneHandeling.Stonetypes;
+
+import Model.BoardDataHandle.BoardDataHandler;
+import Model.BoardDataHandle.ChessMove;
+import Model.StoneHandeling.StoneType;
 
 import java.util.ArrayList;
 
 public class Pawn extends StoneType {
 
-    private ChessBoard board;
+    private BoardDataHandler board;
     private boolean isWhite = true;
     private String stoneTypeName = "";
     private int stoneTypeIndex = -1;
@@ -40,7 +44,7 @@ public class Pawn extends StoneType {
         return pMoves;
     }
 
-    public Pawn(ChessBoard cBoard, boolean sWhite){
+    public Pawn(BoardDataHandler cBoard, boolean sWhite){
         board = cBoard;
         isWhite = sWhite;
         stoneTypeName = "Pawn " + (sWhite ? "White" : "Black");

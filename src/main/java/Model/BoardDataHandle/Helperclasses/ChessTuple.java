@@ -1,4 +1,4 @@
-package Model;
+package Model.Helperclasses;
 
 public class ChessTuple {
     private int i;

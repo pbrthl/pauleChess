@@ -1,8 +1,12 @@
-package Model;
+package Model.BoardDataHandle;
+
+import Model.BoardDataHandle.Helperclasses.ChessTuple;
+import Model.BoardDataHandle.StoneHandeling.StoneHandler;
+import Model.BoardDataHandle.StoneHandeling.StoneType;
 
 import java.util.ArrayList;
 
-public class ChessBoard {
+public class BoardDataHandler {
 
 
     //stores information about the chessBoard constellation
@@ -94,7 +98,7 @@ public class ChessBoard {
     private String estimateStoneType(int i, int j){
         switch (chessBoard[i][j]) {
             case 0:
-                return "__";
+                return "|___";
             case 1:
                     return "PawnWhite";
             case 2:
@@ -104,7 +108,7 @@ public class ChessBoard {
             case 4:
                 return "BishopBlack";
             case 5:
-                return "HorseWite";
+                return "HorseWhite";
             case 6:
                 return "HorseBlack";
             case 7:
@@ -171,6 +175,10 @@ public class ChessBoard {
         return false;
     }
 
+    public StoneType getStonetype(int i, int j){
+        return stoneHandler.getStoneType(i, j);
+    }
+
 
     public boolean isHorse(int ic, int jc){
         if(isBoardField(ic, jc)){
@@ -219,7 +227,7 @@ public class ChessBoard {
     }
 
 
-    public ChessBoard(){
+    public BoardDataHandler(){
         initializeChessBoard();
     }
 

@@ -1,17 +1,22 @@
-package Model;
+package Model.BoardDataHandle.StoneHandeling.Stonetypes;
+
+import Model.BoardDataHandle.BoardDataHandler;
+import Model.BoardDataHandle.ChessMove;
+import Model.BoardDataHandle.Helperclasses.ChessTuple;
+import Model.BoardDataHandle.StoneHandeling.StoneType;
 
 import java.util.ArrayList;
 
 public class StoneHandler {
 
-    private ChessBoard board;
+    private BoardDataHandler board;
     private ChessTuple whiteKingPosition = new ChessTuple(4, 0);
     private ChessTuple blackKingPosition =  new ChessTuple(4, 7);
 
     //private ArrayList<StoneType> stoneTypes = new ArrayList<StoneType>();
     StoneType stoneTypes[];
 
-    public StoneHandler(ChessBoard ini){
+    public StoneHandler(BoardDataHandler ini){
         board = ini;
         stoneTypes = new StoneType[13];
 

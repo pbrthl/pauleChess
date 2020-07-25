@@ -1,5 +1,7 @@
 package Model;
 
+import Model.StoneHandeling.StoneType;
+
 public class ChessMove {
     private int movedTypeIndex = 0;
     private int indexIB = 0;
