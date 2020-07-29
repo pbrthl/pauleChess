@@ -5,6 +5,7 @@ import Model.BoardDataHandle.StoneHandeling.StoneHandler;
 import Model.BoardDataHandle.StoneHandeling.StoneType;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 public class BoardDataHandler {
 
@@ -12,7 +13,40 @@ public class BoardDataHandler {
     //stores information about the chessBoard constellation
     private int[][] chessBoard = new int[8][8];
 
+    // sequence of chessmoves that were made
+    private Stack<ChessMove> moveHistory = new Stack<>();
+
     private StoneHandler stoneHandler = new StoneHandler(this);
+
+    private boolean whiteKingMovedYet = false;
+    private boolean blackKingMovedYet = false;
+    private boolean leftWhiteTowerMovedYet = false;
+    private boolean rightWhiteTowerMovedYet = false;
+    private boolean leftBlackTowerMovedYet = false;
+    private boolean rightBlackTowerMovedYet = false;
+
+    public boolean kingMovedYet(boolean white){
+        return (white ? whiteKingMovedYet : blackKingMovedYet);
+    }
+
+    public boolean towerMovedYet(boolean white, boolean left){
+        return (white ? (left ? leftWhiteTowerMovedYet : rightWhiteTowerMovedYet) : (left ? leftBlackTowerMovedYet : rightBlackTowerMovedYet));
+    }
+
+    public void setKingMoved(boolean white, boolean val){
+        if(white) whiteKingMovedYet = val;
+        else blackKingMovedYet = val;
+    }
+
+    public void setTowerMoved(boolean white, boolean left, boolean val){
+        if(white){
+            if(left) leftWhiteTowerMovedYet = val;
+            else rightWhiteTowerMovedYet = val;
+        } else {
+            if(left) leftBlackTowerMovedYet = val;
+            else rightBlackTowerMovedYet = val;
+        }
+    }
 
     public boolean isEmptyField(int i, int j){
         if(i < 0 || i > 7 || j < 0 || j > 7) return false;
@@ -93,56 +127,15 @@ public class BoardDataHandler {
             }
         }
 
-    }
+        whiteKingMovedYet = false;
+        blackKingMovedYet = false;
+        leftWhiteTowerMovedYet = false;
+        rightWhiteTowerMovedYet = false;
+        leftBlackTowerMovedYet = false;
+        rightBlackTowerMovedYet = false;
 
-    private String estimateStoneType(int i, int j){
-        switch (chessBoard[i][j]) {
-            case 0:
-                return "|___";
-            case 1:
-                    return "PawnWhite";
-            case 2:
-                return "PawnBlack";
-            case 3:
-                return "BishopWhite";
-            case 4:
-                return "BishopBlack";
-            case 5:
-                return "HorseWhite";
-            case 6:
-                return "HorseBlack";
-            case 7:
-                return "TowerWhite";
-            case 8:
-                return "TowerBlack";
-            case 9:
-                return "QueenWhite";
-            case 10:
-                return "QueenBlack";
-            case 11:
-                return "KingWhite";
-            case 12:
-                return "KingBlack";
-            default:
-                return "Error - Field-value = " + chessBoard[i][j];
+        moveHistory = new Stack<>();
 
-
-        }
-    }
-
-    public void printBoard(){
-        String boardline = "\n\n\n\n";
-        for(int j = 7; j >= 0; j--){
-            for (int i = 0; i < 8; i++){
-                boardline = boardline + " " + estimateStoneType(i, j);
-                if(i == 7 ){
-                    System.out.println(boardline);
-                    boardline = "";
-
-                }
-            }
-        }
-        System.out.println("\n");
     }
 
     public void moveStone(ChessMove move){
@@ -226,10 +219,33 @@ public class BoardDataHandler {
         return isThreateningKing;
     }
 
+    public ArrayList<ChessMove> getPossiblePlayerMoves(boolean playerWhite){
+        ArrayList<ChessMove> pMoves = new ArrayList<>();
+        for(int ii = 0; ii < 8; ii++){
+            for(int ji = 0; ji < 8; ji++){
+
+                if(chessBoard[ii][ji] != 0 && ! (isWhiteField(ii, ji) ^ playerWhite)){
+                    for(ChessMove move : getMovesForField(ii, ji)){
+                        pMoves.add(move);
+                    }
+
+                }
+            }
+        }
+        return pMoves;
+    }
+
 
     public BoardDataHandler(){
         initializeChessBoard();
     }
 
 
+    public Stack<ChessMove> getMoveHistory() {
+        return moveHistory;
+    }
+
+    public void setMoveHistory(Stack<ChessMove> moveHistory) {
+        this.moveHistory = moveHistory;
+    }
 }

@@ -1,8 +1,8 @@
-package Model.StoneHandeling.Stonetypes;
+package Model.BoardDataHandle.StoneHandeling.Stonetypes;
 
 import Model.BoardDataHandle.BoardDataHandler;
 import Model.BoardDataHandle.ChessMove;
-import Model.StoneHandeling.StoneType;
+import Model.BoardDataHandle.StoneHandeling.StoneType;
 
 import java.util.ArrayList;
 

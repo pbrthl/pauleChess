@@ -1,4 +1,4 @@
-package Model.Helperclasses;
+package Model.BoardDataHandle.Helperclasses;
 
 public class ChessTuple {
     private int i;

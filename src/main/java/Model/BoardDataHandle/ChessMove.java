@@ -1,6 +1,8 @@
-package Model;
+package Model.BoardDataHandle;
 
-import Model.StoneHandeling.StoneType;
+import Model.BoardDataHandle.StoneHandeling.StoneType;
+import Model.BoardDataHandle.StoneHandeling.Stonetypes.NoStone;
+import Model.Chessboard;
 
 public class ChessMove {
     private int movedTypeIndex = 0;
@@ -12,7 +14,12 @@ public class ChessMove {
     private int targetTypeIndex;
     private boolean rojade = false;
     private boolean typeChange = false;
-    private StoneType changeType;
+    private StoneType changeType = new NoStone(new BoardDataHandler(), false);
+    private boolean firstMoveKing = false;
+    private boolean firstMoveLeftTower = false;
+    private boolean firstMoveRightTower = false;
+    private boolean enPassantPawn = false;
+    private boolean enPassantStrike = false;
 
     public ChessMove(int sType, int tType, int iIndexB, int jIndexB, int iIndexA, int jIndexA, boolean wStone){
         movedTypeIndex = sType;
@@ -22,6 +29,16 @@ public class ChessMove {
         indexIA = iIndexA;
         indexJA = jIndexA;
         isWhite = wStone;
+    }
+
+    public ChessMove setEnPassantPawn(){
+        enPassantPawn = true;
+        return this;
+    }
+
+    public ChessMove setEnPassantStrike(){
+        enPassantStrike = true;
+        return this;
     }
 
 
@@ -78,6 +95,12 @@ public class ChessMove {
         return indexJB;
     }
 
+    public ChessMove setFirstTowerMove(boolean left){
+        if(left) firstMoveLeftTower = true;
+        else firstMoveRightTower = true;
+        return this;
+    }
+
     public void setIndexJB(int indexJB) {
         this.indexJB = indexJB;
     }
@@ -112,5 +135,46 @@ public class ChessMove {
 
     public boolean isTypeChange() {
         return typeChange;
+    }
+
+    public boolean isFirstMoveKing() {
+        return firstMoveKing;
+    }
+
+    public ChessMove setFirstMoveKing(boolean firstMoveKing) {
+        this.firstMoveKing = firstMoveKing;
+        return this;
+    }
+
+    public boolean isFirstMoveLeftTower() {
+        return firstMoveLeftTower;
+    }
+
+    public void setFirstMoveLeftTower(boolean firstMoveLeftTower) {
+        this.firstMoveLeftTower = firstMoveLeftTower;
+    }
+
+    public boolean isFirstMoveRightTower() {
+        return firstMoveRightTower;
+    }
+
+    public void setFirstMoveRightTower(boolean firstMoveRightTower) {
+        this.firstMoveRightTower = firstMoveRightTower;
+    }
+
+    public boolean isEnPassantPawn() {
+        return enPassantPawn;
+    }
+
+    public void setEnPassantPawn(boolean enPassantPawn) {
+        this.enPassantPawn = enPassantPawn;
+    }
+
+    public boolean isEnPassantStrike() {
+        return enPassantStrike;
+    }
+
+    public void setEnPassantStrike(boolean enPassantStrike) {
+        this.enPassantStrike = enPassantStrike;
     }
 }

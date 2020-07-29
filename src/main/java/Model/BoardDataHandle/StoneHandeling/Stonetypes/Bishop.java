@@ -1,8 +1,8 @@
-package Model.StoneHandeling.Stonetypes;
+package Model.BoardDataHandle.StoneHandeling.Stonetypes;
 
 import Model.BoardDataHandle.BoardDataHandler;
 import Model.BoardDataHandle.ChessMove;
-import Model.StoneHandeling.StoneType;
+import Model.BoardDataHandle.StoneHandeling.StoneType;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class Bishop extends StoneType {
         board = cBoard;
         isWhite = sWhite;
         stoneTypeName = "Bishop " + (sWhite ? "White" : "Black");
-        stoneTypeIndex = (sWhite ? 7 : 8);
+        stoneTypeIndex = (sWhite ? 3 : 4);
     }
 
     public ArrayList<ChessMove> getPossibleMoves(int i, int j) {

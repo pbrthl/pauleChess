@@ -1,8 +1,8 @@
-package Model.StoneHandeling.Stonetypes;
+package Model.BoardDataHandle.StoneHandeling.Stonetypes;
 
 import Model.BoardDataHandle.BoardDataHandler;
 import Model.BoardDataHandle.ChessMove;
-import Model.StoneHandeling.StoneType;
+import Model.BoardDataHandle.StoneHandeling.StoneType;
 
 import java.util.ArrayList;
 
@@ -17,7 +17,7 @@ public class NoStone extends StoneType {
         board = cBoard;
         isWhite = sWhite;
         stoneTypeName = "EmptyField";
-        stoneTypeIndex = (sWhite ? 9 : 10);
+        stoneTypeIndex = 0;
     }
 
     public ArrayList<ChessMove> getPossibleMoves(int i, int j) {

@@ -1,4 +1,4 @@
-package Model.StoneHandeling;
+package Model.BoardDataHandle.StoneHandeling;
 
 import Model.BoardDataHandle.BoardDataHandler;
 import Model.BoardDataHandle.ChessMove;
@@ -15,4 +15,7 @@ public abstract class StoneType {
         return new ArrayList<ChessMove>();
     }
 
+    public int getStoneTypeIndex() {
+        return stoneTypeIndex;
+    }
 }
