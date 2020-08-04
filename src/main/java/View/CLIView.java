@@ -54,7 +54,7 @@ public class CLIView extends ChessView {
 
         while(true) {
             if(inputError){
-                System.out.println("Invalid inpur. Try again.");
+                System.out.println("Invalid input. Try again.");
             }
             System.out.println("Which stone do you want to move?");
             System.out.println("Type the field name (A1, A2, .. A8, B1, ...B8, ... ... H8");

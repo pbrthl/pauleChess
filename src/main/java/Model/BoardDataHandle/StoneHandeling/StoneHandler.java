@@ -61,6 +61,7 @@ public class StoneHandler {
     public void moveStone(ChessMove move){
 
 
+
         if(! board.isBoardField(move.getIndexIA(), move.getIndexJA()) || ! board.isBoardField(move.getIndexIB(), move.getIndexJB())) return;
 
         board.getMoveHistory().push(move);
@@ -99,11 +100,15 @@ public class StoneHandler {
             board.setTowerMoved(move.isWhite(), (move.getIndexIB() > move.getIndexIA()), true);
             board.setFieldValue((move.getIndexIB() < move.getIndexIA() ?  5 : 3), row, (move.isWhite() ? 7 : 8));
             board.setFieldValue((move.getIndexIB() < move.getIndexIA() ? 6 : 2), row, (move.isWhite() ? 11 : 12));
+            board.setFieldValue(4, row,  0);
+            board.setFieldValue((move.getIndexIB() < move.getIndexIA() ? 7 : 0), row,0);
+
         }
 
         if( ! (move.getChangeType().getStoneTypeIndex() == 0)){
             board.setFieldValue(move.getIndexIA(), move.getIndexJA(), move.getChangeType().getStoneTypeIndex());
         }
+
     }
 
 

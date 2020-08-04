@@ -25,6 +25,7 @@ public class King extends StoneType {
 
         int icoord;
         int jcoord;
+        ChessMove checkMove;
 
         for(int iAxis = -1; iAxis < 2; iAxis++){
 
@@ -37,13 +38,15 @@ public class King extends StoneType {
                 if(board.isBoardField(icoord, jcoord)){
 
                     if(board.isEmptyField(icoord, jcoord)){
-                        if(! board.checkKingThreateningMove(new ChessMove(stoneTypeIndex, 0, i, j, icoord, jcoord, isWhite))) {
+                        checkMove = (board.kingMovedYet(isWhite) ? new ChessMove(stoneTypeIndex, 0, i, j, icoord, jcoord, isWhite) : new ChessMove(stoneTypeIndex, 0, i, j, icoord, jcoord, isWhite).setFirstMoveKing(true));
+                        if(! board.checkKingThreateningMove(checkMove)) {
 
                             if(board.kingMovedYet(isWhite)) pMoves.add(new ChessMove(stoneTypeIndex, 0, i, j, icoord, jcoord, isWhite));
                              else pMoves.add(new ChessMove(stoneTypeIndex, 0, i, j, icoord, jcoord, isWhite).setFirstMoveKing(true));
                         }
                     } else if(board.isWhiteField(icoord, jcoord) ^ isWhite){
-                        if(board.checkKingThreateningMove(new ChessMove(stoneTypeIndex, board.getFieldValue(icoord, jcoord), i, j, icoord, jcoord, isWhite))) continue;
+                        checkMove = (board.kingMovedYet(isWhite) ? new ChessMove(stoneTypeIndex, board.getFieldValue(icoord, jcoord), i, j, icoord, jcoord, isWhite) :  new ChessMove(stoneTypeIndex, board.getFieldValue(icoord, jcoord), i, j, icoord, jcoord, isWhite).setFirstMoveKing(true));
+                        if(board.checkKingThreateningMove(checkMove)) continue;
                         else {
                             if(board.kingMovedYet(isWhite)) pMoves.add(new ChessMove(stoneTypeIndex, board.getFieldValue(icoord, jcoord), i, j, icoord, jcoord, isWhite));
                             else pMoves.add(new ChessMove(stoneTypeIndex, board.getFieldValue(icoord, jcoord), i, j, icoord, jcoord, isWhite).setFirstMoveKing(true));
@@ -56,6 +59,8 @@ public class King extends StoneType {
 
         }
         //Rochade
+
+
         if(! board.kingMovedYet(isWhite) && ! board.getStoneHandler().fieldIsThreatened(i, j)){
             int row = (isWhite ? 0 : 7);
             int dir = 0;
@@ -64,8 +69,14 @@ public class King extends StoneType {
                     dir = (directions == 0 ? -1 : 1);
                     for(int steps = 1; steps < 5; steps++){
                         if(board.isEmptyField(i + steps * dir, row)){
-                            if(board.getStoneHandler().fieldIsThreatened(i + steps * dir, row)) break;
+                            board.setFieldValue(i + steps * dir, row, (isWhite ? 1 : 2));
+                            if(board.getStoneHandler().fieldIsThreatened(i + steps * dir, row)) {
+                                board.setFieldValue(i + steps * dir, row, (isWhite ? 1 : 2));
+                                break;
+                            }
+                            board.setFieldValue(i + steps * dir, row, (isWhite ? 1 : 2));
                         }   else {
+
 
                             if(board.isTower(i + steps * dir, row) && ! board.getStoneHandler().fieldIsThreatened(i + steps * dir, row)){
 
