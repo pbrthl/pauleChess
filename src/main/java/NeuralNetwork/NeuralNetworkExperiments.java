@@ -20,10 +20,10 @@ public class NeuralNetworkExperiments {
                 {0},{1},{1},{0}
         };
 
-        NeuralNetwork nn = new NeuralNetwork(2,10,1);
+        NeuralNetwork nn = new NeuralNetwork(2,7,1, 2);
         nn.fit(X, Y, 50000);
 
-        System.out.println("Training terminated. Tests are printed.. \n");
+        System.out.println("Training terminated. Testresults are printed.. \n");
 
         double [][] input ={{0,0},{0,1},{1,0},{1,1}};
         List<Double> output;
