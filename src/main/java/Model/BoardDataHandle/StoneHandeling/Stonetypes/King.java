@@ -99,4 +99,10 @@ public class King extends StoneType {
         return pMoves;
     }
 
+
+    @Override
+    public int getStoneTypeIndex() {
+        return stoneTypeIndex;
+    }
+
 }

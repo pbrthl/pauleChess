@@ -20,6 +20,11 @@ public class Bishop extends StoneType {
         stoneTypeIndex = (sWhite ? 3 : 4);
     }
 
+    @Override
+    public int getStoneTypeIndex() {
+        return stoneTypeIndex;
+    }
+
     public ArrayList<ChessMove> getPossibleMoves(int i, int j) {
         ArrayList<ChessMove> pMoves = new ArrayList<>();
 

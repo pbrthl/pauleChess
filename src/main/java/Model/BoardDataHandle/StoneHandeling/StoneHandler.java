@@ -65,6 +65,7 @@ public class StoneHandler {
         if(! board.isBoardField(move.getIndexIA(), move.getIndexJA()) || ! board.isBoardField(move.getIndexIB(), move.getIndexJB())) return;
 
         board.getMoveHistory().push(move);
+        board.incrementMoves();
 
         if(! move.isRojade()) {
 
@@ -102,6 +103,11 @@ public class StoneHandler {
             board.setFieldValue((move.getIndexIB() < move.getIndexIA() ? 6 : 2), row, (move.isWhite() ? 11 : 12));
             board.setFieldValue(4, row,  0);
             board.setFieldValue((move.getIndexIB() < move.getIndexIA() ? 7 : 0), row,0);
+            if (move.getMovedTypeIndex() == 11) {
+                whiteKingPosition = new ChessTuple(move.getIndexIA(), move.getIndexJA());
+            } else {
+                blackKingPosition = new ChessTuple(move.getIndexIA(), move.getIndexJA());
+            }
 
         }
 
@@ -117,6 +123,7 @@ public class StoneHandler {
         board.setFieldValue(move.getIndexIB(), move.getIndexJB(), move.getMovedTypeIndex() );
         board.setFieldValue(move.getIndexIA(), move.getIndexJA(), move.getTargetTypeIndex());
         board.getMoveHistory().pop();
+        board.decrementMoves();
 
         if(move.getMovedTypeIndex() == 11 || move.getMovedTypeIndex() == 12){
 
@@ -158,7 +165,6 @@ public class StoneHandler {
         if(! board.isBoardField(ic, jc)) return new ArrayList<>();
         return stoneTypes[board.getFieldValue(ic, jc)].getPossibleMoves(ic, jc);
     }
-
 
     public boolean fieldIsThreatened(int ic, int jc){
         if(! board.isBoardField(ic, jc)) return false;

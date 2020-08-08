@@ -58,4 +58,10 @@ public class Horse extends StoneType {
     }
 
 
+    @Override
+    public int getStoneTypeIndex() {
+        return stoneTypeIndex;
+    }
+
+
 }

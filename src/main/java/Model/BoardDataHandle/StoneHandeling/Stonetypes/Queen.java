@@ -20,6 +20,13 @@ public class Queen extends StoneType {
         stoneTypeIndex = (sWhite ? 9 : 10);
     }
 
+
+    @Override
+    public int getStoneTypeIndex() {
+        return stoneTypeIndex;
+    }
+
+
     public ArrayList<ChessMove> getPossibleMoves(int i, int j) {
         ArrayList<ChessMove> pMoves = new ArrayList<>();
 

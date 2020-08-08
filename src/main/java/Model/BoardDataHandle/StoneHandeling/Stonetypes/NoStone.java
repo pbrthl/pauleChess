@@ -11,13 +11,18 @@ public class NoStone extends StoneType {
     private BoardDataHandler board;
     private boolean isWhite = true;
     private String stoneTypeName = "";
-    private int stoneTypeIndex = -1;
+    private int stoneTypeIndex = 0;
 
     public NoStone(BoardDataHandler cBoard, boolean sWhite){
         board = cBoard;
         isWhite = sWhite;
         stoneTypeName = "EmptyField";
         stoneTypeIndex = 0;
+    }
+
+    @Override
+    public int getStoneTypeIndex() {
+        return stoneTypeIndex;
     }
 
     public ArrayList<ChessMove> getPossibleMoves(int i, int j) {

@@ -15,6 +15,17 @@ public class BoardDataHandler {
 
     // sequence of chessmoves that were made
     private Stack<ChessMove> moveHistory = new Stack<>();
+    private ChessMove[] firstEightMoves;
+    private int moves = 0;
+    private boolean ignoreKingThread = false;
+
+    public void incrementMoves(){
+        moves += 1;
+    };
+
+    public void decrementMoves(){
+        moves -= 1;
+    }
 
     private StoneHandler stoneHandler = new StoneHandler(this);
 
@@ -74,7 +85,6 @@ public class BoardDataHandler {
     public ArrayList<ChessMove> getMovesForField(int ic, int jc){
         return stoneHandler.getMovesForField(ic, jc);
     }
-
 
     public void initializeChessBoard(){
         //index 0_0 is A1
@@ -172,7 +182,6 @@ public class BoardDataHandler {
         return stoneHandler.getStoneType(i, j);
     }
 
-
     public boolean isHorse(int ic, int jc){
         if(isBoardField(ic, jc)){
             if(chessBoard[ic][jc] == 5 || chessBoard[ic][jc] == 6){
@@ -181,7 +190,6 @@ public class BoardDataHandler {
         }
         return false;
     }
-
 
     public boolean isTower(int ic, int jc){
         if(isBoardField(ic, jc)){
@@ -211,7 +219,16 @@ public class BoardDataHandler {
         return false;
     }
 
+    public  void ignoreKingThread(){
+        ignoreKingThread = true;
+    }
+
+    public void dontIgnoreKingThread(){
+        ignoreKingThread = false;
+    }
+
     public boolean checkKingThreateningMove(ChessMove move){
+        if(ignoreKingThread) return false;
         moveStone(move);
         ChessTuple kingsPosition = (move.isWhite() ? stoneHandler.getWhiteKingPosition() : stoneHandler.getBlackKingPosition());
         boolean isThreateningKing =  stoneHandler.fieldIsThreatened(kingsPosition.getI(), kingsPosition.getJ());
@@ -235,7 +252,6 @@ public class BoardDataHandler {
         return pMoves;
     }
 
-
     public BoardDataHandler(){
         initializeChessBoard();
     }
@@ -247,5 +263,15 @@ public class BoardDataHandler {
 
     public void setMoveHistory(Stack<ChessMove> moveHistory) {
         this.moveHistory = moveHistory;
+    }
+
+    public int getMoves() {
+        return moves;
+    }
+
+    public boolean kingIsThreatened(boolean white){
+        if(ignoreKingThread) return false;
+        ChessTuple kingsPosition = (white ? stoneHandler.getWhiteKingPosition() : stoneHandler.getBlackKingPosition());
+        return  stoneHandler.fieldIsThreatened(kingsPosition.getI(), kingsPosition.getJ());
     }
 }

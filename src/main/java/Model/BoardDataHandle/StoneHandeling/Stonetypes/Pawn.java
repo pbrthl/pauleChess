@@ -14,6 +14,7 @@ public class Pawn extends StoneType {
     private int stoneTypeIndex = -1;
 
     public ArrayList<ChessMove> getPossibleMoves(int i, int j){
+        //System.out.println("Checking moves for pawn..");
         ArrayList<ChessMove> pMoves = new ArrayList<ChessMove>();
         int offset;
         if(isWhite){
@@ -24,13 +25,15 @@ public class Pawn extends StoneType {
 
         for(int ii = -1; ii < 2; ii++){
 
+
             //one step ahead, not diagonal
             // stone change on last field must be considered
             if(ii == 0 && board.isEmptyField(i , j + offset)){
+                //System.out.println("Nondiagonal check..");
 
                 if(! board.checkKingThreateningMove(new ChessMove(stoneTypeIndex, board.getFieldValue(i + ii, j + offset), i, j, ii + i, j + offset, isWhite))){
 
-                    pMoves.add(new ChessMove(stoneTypeIndex, board.getFieldValue(i + ii, j + offset), i, j, ii + i, j + offset, isWhite));
+                    if(! (j + offset == 7 || j + offset == 0)) pMoves.add(new ChessMove(stoneTypeIndex, board.getFieldValue(i + ii, j + offset), i, j, ii + i, j + offset, isWhite));
                     //stone change
                     if(j + offset == 7 || j + offset == 0){
 
@@ -45,16 +48,44 @@ public class Pawn extends StoneType {
                 }
 
             } else {
+                //System.out.println("Diagonal check..");
 
                 //diagonal move, not en passant
+                //System.out.println("Checking diagonal move..");
+                //System.out.println((isWhite? "White " : "Black ") + "pawn on (" + i +", " + j + ") check for (" + (i + ii) + ", " + (j + offset) + ")");
 
                 if (board.isBoardField(i + ii, j + offset)){
                     if (!(ii == 0) && !board.isEmptyField(i + ii, j + offset) && (board.isWhiteField(i + ii, j + offset) ^ isWhite)) {
-                        if (!board.checkKingThreateningMove(new ChessMove(stoneTypeIndex, board.getFieldValue(i + ii, j + offset), i, j, ii + i, j + offset, isWhite)))
-                            pMoves.add(new ChessMove(stoneTypeIndex, board.getFieldValue(i + ii, j + offset), i, j, ii + i, j + offset, isWhite));
-                    }
-                }
+                        //System.out.println("Check kingthreatening..");
+                        if (! board.checkKingThreateningMove
+                                (new ChessMove(stoneTypeIndex,
+                                        board.getFieldValue(
+                                                i + ii,
+                                                j + offset),
+                                        i,
+                                        j,
+                                        ii + i,
+                                        j + offset,
+                                        isWhite))){
+                            //System.out.println("There should be moves..");
+                            //System.out.println("Checked kingthreatening..");
+                            if (!(j + offset == 7 || j + offset == 0)) {
+                               // System.out.println("Move found. Move is added.");
+                                pMoves.add(new ChessMove(stoneTypeIndex, board.getFieldValue(i + ii, j + offset), i, j, ii + i, j + offset, isWhite));
+                            } else {
+                                //System.out.println("Move found. Move is added. Its a typechangemove.");
+                                int stoneIndexStart = (isWhite ? 3 : 4);
+                                for (int stoneIndexOff = stoneIndexStart; stoneIndexOff < 11; stoneIndexOff += 2) {
+                                    pMoves.add(new ChessMove(stoneTypeIndex, board.getFieldValue(i + ii, j + offset), i, j, ii + i, j + offset, isWhite, board.getStoneHandler().getStoneTypeForIndex(stoneIndexStart + stoneIndexOff)));
+                                }
+                            }
+                    } //else System.out.println("Considered move is kingthreatening.");
+                    } //else System.out.println("Move not possible. Field not empty or of same color.");
+                } //else System.out.println("Move not possible, no boardfield.");
+                //System.out.println("Diagonal check finished..");
             }
+
+
         }
 
 
@@ -92,6 +123,12 @@ public class Pawn extends StoneType {
         }
 
         return pMoves;
+    }
+
+
+    @Override
+    public int getStoneTypeIndex() {
+        return stoneTypeIndex;
     }
 
     public Pawn(BoardDataHandler cBoard, boolean sWhite){
